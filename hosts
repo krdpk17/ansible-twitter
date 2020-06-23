@@ -1,0 +1,8 @@
+[webservers]
+sarvat.com ansible_user=appadmin
+
+[dbservers]
+sarvat.com ansible_user=neo4jadmin
+
+[logservers]
+sarvat.com ansible_user=appadmin

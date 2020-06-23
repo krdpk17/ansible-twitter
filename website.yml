@@ -1,0 +1,13 @@
+---
+- name: Twitter website
+  hosts: sarvat.com 
+  remote_user: appadmin
+  become: yes
+  tasks:
+    - name: test
+      docker_service:
+        project_src: /home/appadmin/predeploy/website/django-twitter-docker/django-twitter/
+        build: yes
+        restarted: true
+    - debug:
+        var: output
