@@ -16,7 +16,7 @@
     - name: Copying backup
       copy:
         src: /home/neo4jadmin/tempneo4j/backup/neo4j.dump
-        dest: /home/neo4jadmin/neo4jrepo/backups/prod_backup/neo4j.dump
+        dest: /home/neo4jadmin/neo4jrepo/backups/prod_backup/neo4j.dump.{{ansible_date_time.date}}
         remote_src: yes
         owner: neo4jadmin
         group: neo4jadmin
