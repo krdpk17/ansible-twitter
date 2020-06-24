@@ -1,0 +1,19 @@
+---
+- name: VPS health check
+  hosts: sarvat.com 
+  remote_user: neo4jadmin
+
+  tasks:
+    - name: Testing ping
+      ping:
+
+    - name: Sending an e-mail using Gmail SMTP servers (not working)
+      mail:
+        host: smtp.gmail.com
+        port: 587
+        username: emailID@gmail.com
+        password: password
+        to: DestID <destmailID@gmail.com>
+        subject: Ansible-report
+        body: System {{ ansible_hostname }} has been successfully pinged.
+      delegate_to: localhost
