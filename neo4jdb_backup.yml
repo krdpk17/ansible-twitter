@@ -1,0 +1,24 @@
+---
+- name: Neo4J Database backup
+  hosts: sarvat.com 
+  remote_user: neo4jadmin
+  become: yes
+
+  vars:
+    RUN_BKP_DIR_PATH: /home/neo4jadmin/predeploy/neo4j-docker/
+
+  tasks:
+    - name: Performing neo4j database backup
+      shell: 
+        cmd: sudo bash run_backup.sh >>ansible_out.txt
+        chdir: /home/neo4jadmin/predeploy/neo4j-docker/
+    
+    - name: Copying backup
+      copy:
+        src: /home/neo4jadmin/tempneo4j/backup/neo4j.dump
+        dest: /home/neo4jadmin/neo4jrepo/backups/prod_backup/neo4j.dump
+        remote_src: yes
+        owner: neo4jadmin
+        group: neo4jadmin
+        mode: '0644'
+        backup: yes
