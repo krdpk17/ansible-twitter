@@ -1,0 +1,8 @@
+- name: Include a play to start neo4J Database
+  import_playbook: neo4jdb.yml
+
+- name: Include a play to start background twitter tools
+  import_playbook: background_twittertools.yml
+
+- name: Include a play to start website
+  import_playbook: website.yml
