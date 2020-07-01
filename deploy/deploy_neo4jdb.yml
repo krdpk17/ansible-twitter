@@ -1,18 +1,21 @@
 ---
 - name: Neo4J DB installation
-  hosts: sarvat.com 
-  remote_user: neo4jadmin
+  hosts: "{{ host_machine_dns }}" 
+  remote_user: "{{ user_name }}"
   become: yes
   vars_files:
   - group_vars/all
 
   vars:
     app_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/neo4j-docker/"
+    user_name: "{{ neo4j_admin }}"
+    version: v1.0.0
+    repo_url: 'https://github.com/krdpk17/neo4j-docker.git'
 
   tasks:
     - name: Pull code from source
       git:
-        repo: 'https://github.com/krdpk17/neo4j-docker.git'
+        repo: "{{ repo_url }}"
         dest: "{{ app_path }}"
-        version: v1.0.0
-      become_user: neo4jadmin
+        version: "{{ version }}"
+      become_user: "{{ user_name }}"

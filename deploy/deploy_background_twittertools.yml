@@ -1,7 +1,7 @@
 ---
 - name: Background twitter tools installation
-  hosts: sarvat.com 
-  remote_user: appadmin
+  hosts: "{{ host_machine_dns }}"
+  remote_user: "{{ user_name }}"
   become: yes
 
   vars_files:
@@ -9,11 +9,14 @@
 
   vars:
     app_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/twitter-neo4j/"
+    user_name: "{{ app_admin }}"
+    version: v1.0.0
+    repo_url: 'https://github.com/krdpk17/twitter-neo4j.git'
 
   tasks:
     - name: Pull code from source
       git:
-        repo: 'https://github.com/krdpk17/twitter-neo4j.git'
+        repo: "{{ repo_url }}"
         dest: "{{ app_path }}"
-        version: v1.0.0
-      become_user: appadmin
+        version: "{{ version }}"
+      become_user: "{{ user_name }}"

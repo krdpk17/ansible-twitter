@@ -3,3 +3,6 @@
 
 deploy_base_dir: ~/production/
 code_dir_name: code
+host_machine_dns: sarvat.com
+app_admin: appadmin
+neo4j_admin: neo4jadmin
