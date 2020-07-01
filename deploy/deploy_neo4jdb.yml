@@ -4,7 +4,7 @@
   remote_user: "{{ user_name }}"
   become: yes
   vars_files:
-  - group_vars/all
+  - ../config/group_vars/all
 
   vars:
     app_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/neo4j-docker/"
