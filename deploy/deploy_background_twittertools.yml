@@ -8,7 +8,7 @@
   - ../config/group_vars/all
 
   vars:
-    app_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/twitter-neo4j/"
+    app_path: "{{ background_tool_base_path }}"
     user_name: "{{ app_admin }}"
     version: v1.0.0
     repo_url: 'https://github.com/krdpk17/twitter-neo4j.git'

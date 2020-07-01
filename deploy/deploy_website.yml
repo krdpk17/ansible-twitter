@@ -8,7 +8,7 @@
   - ../config/group_vars/all
 
   vars:
-    app_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/django-twitter/"
+    app_path: "{{ website_code_base_path }}"
     user_name: "{{ app_admin }}"
     version: v1.0.0
     repo_url: 'https://github.com/krdpk17/django-twitter.git'

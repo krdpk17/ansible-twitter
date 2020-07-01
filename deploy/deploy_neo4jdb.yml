@@ -7,7 +7,7 @@
   - ../config/group_vars/all
 
   vars:
-    app_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/neo4j-docker/"
+    app_path: "{{ neo4j_code_base_path }}"
     user_name: "{{ neo4j_admin }}"
     version: v1.0.0
     repo_url: 'https://github.com/krdpk17/neo4j-docker.git'

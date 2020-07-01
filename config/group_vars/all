@@ -6,3 +6,6 @@ code_dir_name: code
 host_machine_dns: sarvat.com
 app_admin: appadmin
 neo4j_admin: neo4jadmin
+neo4j_code_base_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/neo4j-docker/"
+website_code_base_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/django-twitter/"
+background_tool_base_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/twitter-neo4j/"
