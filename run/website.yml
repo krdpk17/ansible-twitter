@@ -1,13 +1,23 @@
 ---
 - name: Twitter website
-  hosts: sarvat.com 
-  remote_user: appadmin
+  hosts: "{{ host_machine_dns }}" 
+  remote_user: "{{ user_name }}"
   become: yes
+  
+  vars_files:
+  - ../config/group_vars/all
+  
+  vars:
+    app_base_path: " {{ website_code_base_path }} "
+    user_name: "{{ app_admin }}"
+
   tasks:
     - name: Starting Twitter website
       docker_service:
-        project_src: /home/appadmin/predeploy/website/django-twitter-docker/django-twitter/
+        project_src: /home/appadmin/production/tweet/deployments/code/website
+        project_name: "{{ deployment_name }}"
         build: yes
-        restarted: true
+        recreated: yes
+        
     - debug:
         var: output
