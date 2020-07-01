@@ -3,10 +3,17 @@
   hosts: sarvat.com 
   remote_user: appadmin
   become: yes
+
+  vars_files:
+  - group_vars/all
+
+  vars:
+    app_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/twitter-neo4j/"
+
   tasks:
     - name: Pull code from source
       git:
         repo: 'https://github.com/krdpk17/twitter-neo4j.git'
-        dest: ~/production/code/twitter-neo4j/
+        dest: "{{ app_path }}"
         version: v1.0.0
       become_user: appadmin

@@ -1,0 +1,5 @@
+---
+# Variables here are applicable to all deploy groups
+
+deploy_base_dir: ~/production/
+code_dir_name: code
