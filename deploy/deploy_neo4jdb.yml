@@ -1,0 +1,12 @@
+---
+- name: Neo4J DB installation
+  hosts: sarvat.com 
+  remote_user: neo4jadmin
+  become: yes
+  tasks:
+    - name: Pull code from source
+      git:
+        repo: 'https://github.com/krdpk17/neo4j-docker.git'
+        dest: ~/production/code/neo4j-docker/
+        version: v1.0.0
+      become_user: neo4jadmin
