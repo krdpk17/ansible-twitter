@@ -12,4 +12,6 @@ neo4j_admin: neo4jadmin
 neo4j_code_base_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/db/"
 website_code_base_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/website/"
 background_tool_base_path: "{{ deploy_base_dir }}/{{ code_dir_name }}/background_tools/"
+background_tool_docker_path: "{{ background_tool_base_path }}/docker/"
 website_config_repo_base_dir: "{{config_repo_base_dir}}/website/"
+background_tool_config_repo_base_dir: "{{config_repo_base_dir}}/background_tools/"
