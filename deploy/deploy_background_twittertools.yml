@@ -7,6 +7,6 @@
     - name: Pull code from source
       git:
         repo: 'https://github.com/krdpk17/twitter-neo4j.git'
-        dest: ~/production/twitter-neo4j/
+        dest: ~/production/code/twitter-neo4j/
         version: v1.0.0
       become_user: appadmin
