@@ -1,0 +1,12 @@
+---
+- name: Twitter client Website installation
+  hosts: sarvat.com 
+  remote_user: appadmin
+  become: yes
+  tasks:
+    - name: Pull code from source
+      git:
+        repo: 'https://github.com/krdpk17/django-twitter.git'
+        dest: ~/production/django-twitter/
+        version: v1.0.0
+      become_user: appadmin
