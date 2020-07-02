@@ -23,56 +23,26 @@
         repo: "{{ repo_url }}"
         dest: "{{ app_path }}"
         version: "{{ version }}"
-        #force: yes
+        force: yes
       become_user: "{{ user_name }}"
 
-    - name: Configure neo4j.cfg
-      replace:
+    - name: Truncate neo4j.cfg
+      file:
         path: "{{ app_path }}/neo4j.cfg"
-        regexp: '(\s*)NEO_USER='
-        replace: '\n#NEO_USER='
-        backup: yes
+        state: absent
+
+    - name: Recreate neo4j.cfg
+      file:
+        path: "{{ app_path }}/neo4j.cfg"
+        state: touch
 
     - name: Configure neo4j.cfg
-      replace:
-        path: "{{ app_path }}/neo4j.cfg"
-        regexp: '(\s+)NEO_PASSWD='
-        replace: '\n#NEO_PASSWD='
-        backup: yes
-
-    - name: Configure neo4j.cfg
-      replace:
-        path: "{{ app_path }}/neo4j.cfg"
-        regexp: '(\s+)NEO_HTTPS_PORT='
-        replace: '\n#NEO_HTTPS_PORT='
-        backup: yes
-
-    - name: Configure neo4j.cfg
-      replace:
-        path: "{{ app_path }}/neo4j.cfg"
-        regexp: '(\s+)NEO_SERVER_DNS='
-        replace: '\n#NEO_SERVER_DNS='
-        backup: yes
-    - name: Configure neo4j.cfg
-      replace:
-        path: "{{ app_path }}/neo4j.cfg"
-        regexp: '(\s+)NEO_BOLT_PORT='
-        replace: '\n#NEO_BOLT_PORT='
-        backup: yes
-
-    - name: Configure neo4j.cfg
-      replace:
-        path: "{{ app_path }}/neo4j.cfg"
-        regexp: '(\s+)NEO_DB_MNT_PATH='
-        replace: '\n#NEO_DB_MNT_PATH='
-        backup: yes
-    - name: Insert multiple lines and Backup
       blockinfile:
         path: "{{ app_path }}/neo4j.cfg"
         backup: yes
         block: |
           NEO_USER="{{neo4j_user}}"
-          NEO_PASSWD= "{{neo4j_password}}"
+          NEO_PASSWD="{{neo4j_password}}"
           NEO_SERVER_DNS="{{host_machine_dns}}"
           NEO_HTTPS_PORT="{{neo4j_https_port}}"
           NEO_BOLT_PORT="{{neo4j_bolt_port}}"
