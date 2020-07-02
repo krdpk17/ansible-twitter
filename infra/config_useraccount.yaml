@@ -1,0 +1,23 @@
+---
+- name: Twitter installation related user account configuration
+  hosts: "{{ host_machine_dns }}"
+  become: yes 
+
+  vars_files:
+  - ../config/group_vars/all
+
+  vars:
+    app_base_path: "{{ neo4j_code_base_path }}"
+    user_name: "{{ neo4j_admin }}"
+    docker_users:
+      - "{{ neo4j_admin }}"
+      - "{{ app_admin }}"
+
+  tasks:
+    - name: users | adding docker users (for use without sudo)
+      user:
+        name:  "{{ item }}"
+        append: yes
+        groups: docker
+      with_items: 
+         - "{{ docker_users }}"
