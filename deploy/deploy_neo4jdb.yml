@@ -11,6 +11,7 @@
     user_name: "{{ neo4j_admin }}"
     version: v1.0.0
     repo_url: 'https://github.com/krdpk17/neo4j-docker.git'
+    datastore_base_path: "{{dbstore_base_path}}"
 
   tasks:
     - name: Pull code from source
@@ -19,3 +20,10 @@
         dest: "{{ app_path }}"
         version: "{{ version }}"
       become_user: "{{ user_name }}"
+
+    - name: Setup Data store
+      unarchive:
+        src: "{{ dbstore_template_path }}"
+        creates: "{{ neo4j_dbstore_create_flag }}"
+        dest: "{{ neo4j_dbstore_path }}"
+        remote_src: yes
