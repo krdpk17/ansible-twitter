@@ -61,7 +61,7 @@
 
     - name: Configure env files
       lineinfile: 
-        path: "{{ env_dmcheck_file_loc }}"
+        path: "{{ env_file_loc }}"
         regexp: '^NEO4J_PORT=(.*)$'
         line: "NEO4J_PORT={{neo4j_https_port}}"
         state: present
