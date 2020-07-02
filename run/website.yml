@@ -3,13 +3,13 @@
   hosts: "{{ host_machine_dns }}" 
   remote_user: "{{ user_name }}"
   become: yes
-  
+
   vars_files:
   - ../config/group_vars/all
   
   vars:
     app_base_path: "{{ website_code_base_path }}"
-    user_name: "{{ app_admin }}"
+    user_name: "{{ app_admin }}" 
 
   tasks:
     - name: Starting Twitter website
@@ -17,4 +17,6 @@
         project_src: "{{ app_base_path }}"
         project_name: "{{ deployment_name }}"
         build: yes
-        restarted: yes
+        restarted: true
+    - debug:
+        var: output
