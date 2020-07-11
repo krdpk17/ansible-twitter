@@ -13,9 +13,17 @@
     run_path: "{{background_tool_docker_path}}"
 
   tasks:
-    - name: Starting Background twitter tools
+    - name: Starting TweetsFetcher background tool
       docker_service:
         project_src: "{{ run_path }}"
         project_name: "{{ deployment_name }}"
+        build: yes
+        restarted: true
+      
+    - name: Starting DM Check tools
+      docker_service:
+        project_src: "{{ run_path }}"
+        project_name: "{{ deployment_name }}"
+        files: docker-compose-dmcheck_batch1.yml
         build: yes
         restarted: true

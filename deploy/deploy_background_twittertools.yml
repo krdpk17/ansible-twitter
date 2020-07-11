@@ -12,9 +12,14 @@
     user_name: "{{ app_admin }}"
     version: v1.2.0
     repo_url: 'https://github.com/krdpk17/twitter-neo4j.git'
-    env_file_loc: "{{ background_tool_config_repo_base_dir }}/.env"
-    env_dmcheck_file_loc: "{{ background_tool_config_repo_base_dir }}/.env_dmcheck"
-
+    env_file_config_loc: "{{ background_tool_config_repo_base_dir }}/.env"
+    env_dmcheck_batch1_file1_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_dmcheck_client_b1_1"
+    env_dmcheck_batch1_file2_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_dmcheck_client_b1_2"
+    env_dmcheck_monitor_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_dmbucket_monitor"
+    env_file_loc: "{{ background_tool_docker_path }}/.env"
+    env_dmcheck_batch1_file1_loc: "{{ background_tool_docker_path }}/.env_dmcheck_client_b1_1"
+    env_dmcheck_batch1_file2_loc: "{{ background_tool_docker_path }}/.env_dmcheck_client_b1_2"
+    env_dmcheck_monitor_loc: "{{ background_tool_docker_path }}/.env_dmbucket_monitor"
   tasks:
     - name: Pull code from source
       git:
@@ -26,73 +31,76 @@
       tags:
         - imagepull
 
+    - name: Clean old configuration files
+      shell: 
+        chdir: "{{ background_tool_docker_path }}"
+        cmd: "{{ item }}"
+      with_items:
+          - bash -c 'rm -rf {{env_file_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_dmcheck_batch1_file1_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_dmcheck_batch1_file2_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_dmcheck_monitor_loc}}' >>ansible_out.txt
+      become_user: "{{ user_name }}"
+      tags:
+        - configure
+        - links
+
     - name: Add configuration files
       shell: 
         chdir: "{{ background_tool_docker_path }}"
         cmd: "{{ item }}"
       with_items:
-          - bash -c 'ln -s {{env_file_loc}} .' >>ansible_out.txt
-          - bash -c 'ln -s {{env_dmcheck_file_loc}} .' >>ansible_out.txt
+          - bash -c 'ln -s {{env_file_config_loc}} {{env_file_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_dmcheck_batch1_file1_config_loc}} {{env_dmcheck_batch1_file1_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_dmcheck_batch1_file2_config_loc}} {{env_dmcheck_batch1_file2_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_dmcheck_monitor_config_loc}} {{env_dmcheck_monitor_loc}}' >>ansible_out.txt
       become_user: "{{ user_name }}"
       tags:
         - configure
+        - links
 
-    - name: Configure env files
+    - name: Configure NEO4J_PORT
       lineinfile: 
-        path: "{{ env_file_loc }}"
+        path: "{{ item }}"
         regexp: '^NEO4J_PORT=(.*)$'
         line: "NEO4J_PORT={{neo4j_https_port}}"
         state: present
-        backup: yes
+        backup: no
+      with_items:
+        - "{{ env_file_loc }}"
+        - "{{ env_dmcheck_batch1_file1_loc }}"
+        - "{{ env_dmcheck_batch1_file2_loc }}"
+        - "{{ env_dmcheck_monitor_loc }}"
+       
       tags:
         - configure
 
-    - name: Configure env files
+    - name: Configure NEO4J_AUTH
       lineinfile: 
-        path: "{{ env_file_loc }}"
+        path: "{{ item }}"
         regexp: '^NEO4J_AUTH=(.*)$'
         line: "NEO4J_AUTH={{db_username}}/{{db_password}}"
         state: present
-        backup: yes
+        backup: no
+      with_items:
+        - "{{ env_file_loc }}"
+        - "{{ env_dmcheck_batch1_file1_loc }}"
+        - "{{ env_dmcheck_batch1_file2_loc }}"
+        - "{{ env_dmcheck_monitor_loc }}"
       tags:
         - configure
 
-    - name: Configure env files
+    - name: Configure NEO4J_BOLT_PORT
       lineinfile: 
-        path: "{{ env_file_loc }}"
+        path: "{{ item }}"
         regexp: '^NEO4J_BOLT_PORT=(.*)$'
         line: "NEO4J_BOLT_PORT={{neo4j_bolt_port}}"
         state: present
-        backup: yes
-      tags:
-        - configure
-
-    - name: Configure env files
-      lineinfile: 
-        path: "{{ env_dmcheck_file_loc }}"
-        regexp: '^NEO4J_PORT=(.*)$'
-        line: "NEO4J_PORT={{neo4j_https_port}}"
-        state: present
-        backup: yes
-      tags:
-        - configure
-
-    - name: Configure env files
-      lineinfile: 
-        path: "{{ env_dmcheck_file_loc }}"
-        regexp: '^NEO4J_AUTH=(.*)$'
-        line: "NEO4J_AUTH={{db_username}}/{{db_password}}"
-        state: present
-        backup: yes
-      tags:
-        - configure
-  
-    - name: Configure env files
-      lineinfile: 
-        path: "{{ env_dmcheck_file_loc }}"
-        regexp: '^NEO4J_BOLT_PORT=(.*)$'
-        line: "NEO4J_BOLT_PORT={{neo4j_bolt_port}}"
-        state: present
-        backup: yes
+        backup: no
+      with_items:
+        - "{{ env_file_loc }}"
+        - "{{ env_dmcheck_batch1_file1_loc }}"
+        - "{{ env_dmcheck_batch1_file2_loc }}"
+        - "{{ env_dmcheck_monitor_loc }}"
       tags:
         - configure
