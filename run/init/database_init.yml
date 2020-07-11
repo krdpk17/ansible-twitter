@@ -1,0 +1,22 @@
+---
+- name: Initialize Database
+  hosts: "{{ host_machine_dns }}" 
+  remote_user: "{{ user_name }}"
+  become: yes
+
+  vars_files:
+  - ../../config/group_vars/all
+
+  vars:
+    app_base_path: "{{ background_tool_base_path }}"
+    user_name: "{{ app_admin }}"
+    run_path: "{{background_tool_docker_path}}"
+
+  tasks:
+    - name: Initialize database
+      docker_service:
+        project_src: "{{ run_path }}"
+        project_name: "{{ deployment_name }}"
+        files: docker-compose-dbinit.yml
+        build: yes
+        restarted: true
