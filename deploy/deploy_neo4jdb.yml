@@ -25,16 +25,22 @@
         version: "{{ version }}"
         force: yes
       become_user: "{{ user_name }}"
+      tags:
+        - imagepull
 
     - name: Truncate neo4j.cfg
       file:
         path: "{{ app_path }}/neo4j.cfg"
         state: absent
+      tags:
+        - configure
 
     - name: Recreate neo4j.cfg
       file:
         path: "{{ app_path }}/neo4j.cfg"
         state: touch
+      tags:
+        - configure
 
     - name: Configure neo4j.cfg
       blockinfile:
@@ -47,6 +53,8 @@
           NEO_HTTPS_PORT="{{neo4j_https_port}}"
           NEO_BOLT_PORT="{{neo4j_bolt_port}}"
           NEO_DB_MNT_PATH="{{neo4j_dbstore_path}}"
+      tags:
+        - configure
 
     - name: Setup Data store
       unarchive:
@@ -54,4 +62,5 @@
         creates: "{{ neo4j_dbstore_create_flag }}"
         dest: "{{ neo4j_dbstore_path }}"
         remote_src: yes
-    
+      tags:
+        - data_setup    
