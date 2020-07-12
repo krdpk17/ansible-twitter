@@ -1,0 +1,26 @@
+---
+- name: Neo4J Database Restore
+  hosts: sarvat.com 
+  remote_user: neo4jadmin
+  become: yes
+
+  vars:
+    RUN_RESTORE_COPY_SRC_FILE: /home/neo4jadmin/tempneo4j/backup/neo4j.dump
+    RUN_RESTORE_COPY_DST_FILE: /home/neo4jadmin/tempneo4j/restore/neo4j.dump
+
+  tasks:
+    - name: Copying backup
+      copy:
+        src: "{{ RUN_RESTORE_COPY_SRC_FILE }}"
+        dest: "{{ RUN_RESTORE_COPY_DST_FILE }}"
+        remote_src: yes
+        owner: neo4jadmin
+        group: neo4jadmin
+        mode: '0644'
+        backup: yes
+
+    - name: Performing neo4j database restore
+      shell: 
+        cmd: sudo bash run_restore.sh >>ansible_out.txt
+        chdir: /home/neo4jadmin/predeploy/neo4j-docker/
+    
