@@ -20,6 +20,14 @@
         build: yes
         restarted: true
       
+    - name: Starting DM bucket monitor tool
+      docker_service:
+        project_src: "{{ run_path }}"
+        project_name: "{{ deployment_name }}"
+        files: docker-compose-dmbucket_monitor.yml
+        build: yes
+        restarted: true
+
     - name: Starting DM Check tools
       docker_service:
         project_src: "{{ run_path }}"
