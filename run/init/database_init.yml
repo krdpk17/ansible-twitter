@@ -14,7 +14,7 @@
 
   tasks:
     - name: Initialize database
-      docker_service:
+      docker_compose:
         project_src: "{{ run_path }}"
         project_name: "{{ deployment_name }}"
         files: docker-compose-dbinit.yml

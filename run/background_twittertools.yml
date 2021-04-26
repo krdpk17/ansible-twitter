@@ -14,14 +14,14 @@
 
   tasks:
     - name: Starting TweetsFetcher background tool
-      docker_service:
+      docker_compose:
         project_src: "{{ run_path }}"
         project_name: "{{ deployment_name }}"
         build: yes
         restarted: true
       
     - name: Starting DM bucket monitor tool
-      docker_service:
+      docker_compose:
         project_src: "{{ run_path }}"
         project_name: "{{ deployment_name }}"
         files: docker-compose-dmbucket_monitor.yml
@@ -29,7 +29,7 @@
         restarted: true
 
     - name: Starting DM Check tools
-      docker_service:
+      docker_compose:
         project_src: "{{ run_path }}"
         project_name: "{{ deployment_name }}"
         files: docker-compose-dmcheck_batch1.yml
