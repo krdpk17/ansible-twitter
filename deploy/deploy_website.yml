@@ -10,7 +10,7 @@
   vars:
     app_base_path: "{{ website_code_base_path }}"
     user_name: "{{ app_admin }}"
-    version: v1.1.0
+    version: v1.2.0
     repo_url: 'https://github.com/krdpk17/django-twitter.git'
     app_config_base_path: " {{ config_repo_base_dir }} "
     db_env_file_src_loc: "{{ website_config_repo_base_dir }}/.env_db"
@@ -23,6 +23,7 @@
         repo: "{{ repo_url }}"
         dest: "{{ app_base_path }}"
         version: "{{ version }}"
+        force: yes
       become_user: "{{ user_name }}"
     
     - name: Add configuration files
