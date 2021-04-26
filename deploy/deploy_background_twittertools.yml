@@ -20,6 +20,20 @@
     env_dmcheck_batch1_file1_loc: "{{ background_tool_docker_path }}/.env_dmcheck_client_b1_1"
     env_dmcheck_batch1_file2_loc: "{{ background_tool_docker_path }}/.env_dmcheck_client_b1_2"
     env_dmcheck_monitor_loc: "{{ background_tool_docker_path }}/.env_dmbucket_monitor"
+    env_followercheck_batch1_file1_loc: "{{ background_tool_docker_path }}/.env_followercheck_client_b1_1"
+    env_followercheck_monitor_loc: "{{ background_tool_docker_path }}/.env_followercheck_monitor"
+    env_followercheck_batch1_file1_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_followercheck_client_b1_1"
+    env_followercheck_monitor_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_followercheck_monitor"
+    env_followercheck_batch1_file2_loc: "{{ background_tool_docker_path }}/.env_followercheck_client_b1_2"
+    env_followercheck_batch1_file2_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_followercheck_client_b1_2"
+
+    env_followingcheck_batch1_file1_loc: "{{ background_tool_docker_path }}/.env_followingcheck_client_b1_1"
+    env_followingcheck_monitor_loc: "{{ background_tool_docker_path }}/.env_followingcheck_monitor"
+    env_followingcheck_batch1_file1_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_followingcheck_client_b1_1"
+    env_followingcheck_monitor_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_followingcheck_monitor"
+    env_followingcheck_batch1_file2_loc: "{{ background_tool_docker_path }}/.env_followingcheck_client_b1_2"
+    env_followingcheck_batch1_file2_config_loc: "{{ background_tool_config_repo_base_dir }}/.env_followingcheck_client_b1_2"
+
   tasks:
     - name: Pull code from source
       git:
@@ -40,6 +54,12 @@
           - bash -c 'rm -rf {{env_dmcheck_batch1_file1_loc}}' >>ansible_out.txt
           - bash -c 'rm -rf {{env_dmcheck_batch1_file2_loc}}' >>ansible_out.txt
           - bash -c 'rm -rf {{env_dmcheck_monitor_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_followercheck_monitor_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_followercheck_batch1_file1_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_followercheck_batch1_file2_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_followingcheck_monitor_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_followingcheck_batch1_file1_loc}}' >>ansible_out.txt
+          - bash -c 'rm -rf {{env_followingcheck_batch1_file2_loc}}' >>ansible_out.txt
       become_user: "{{ user_name }}"
       tags:
         - configure
@@ -54,6 +74,12 @@
           - bash -c 'ln -s {{env_dmcheck_batch1_file1_config_loc}} {{env_dmcheck_batch1_file1_loc}}' >>ansible_out.txt
           - bash -c 'ln -s {{env_dmcheck_batch1_file2_config_loc}} {{env_dmcheck_batch1_file2_loc}}' >>ansible_out.txt
           - bash -c 'ln -s {{env_dmcheck_monitor_config_loc}} {{env_dmcheck_monitor_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_followercheck_monitor_config_loc}} {{env_followercheck_monitor_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_followercheck_batch1_file1_config_loc}} {{env_followercheck_batch1_file1_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_followercheck_batch1_file2_config_loc}} {{env_followercheck_batch1_file2_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_followingcheck_monitor_config_loc}} {{env_followingcheck_monitor_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_followingcheck_batch1_file1_config_loc}} {{env_followingcheck_batch1_file1_loc}}' >>ansible_out.txt
+          - bash -c 'ln -s {{env_followingcheck_batch1_file2_config_loc}} {{env_followingcheck_batch1_file2_loc}}' >>ansible_out.txt
       become_user: "{{ user_name }}"
       tags:
         - configure
@@ -71,6 +97,12 @@
         - "{{ env_dmcheck_batch1_file1_loc }}"
         - "{{ env_dmcheck_batch1_file2_loc }}"
         - "{{ env_dmcheck_monitor_loc }}"
+        - "{{ env_followercheck_monitor_loc }}"
+        - "{{ env_followercheck_batch1_file1_loc }}"
+        - "{{ env_followercheck_batch1_file2_loc }}"
+        - "{{ env_followingcheck_monitor_loc }}"
+        - "{{ env_followingcheck_batch1_file1_loc }}"
+        - "{{ env_followingcheck_batch1_file2_loc }}"
        
       tags:
         - configure
@@ -87,6 +119,12 @@
         - "{{ env_dmcheck_batch1_file1_loc }}"
         - "{{ env_dmcheck_batch1_file2_loc }}"
         - "{{ env_dmcheck_monitor_loc }}"
+        - "{{ env_followercheck_monitor_loc }}"
+        - "{{ env_followercheck_batch1_file1_loc }}"
+        - "{{ env_followercheck_batch1_file2_loc }}"
+        - "{{ env_followingcheck_monitor_loc }}"
+        - "{{ env_followingcheck_batch1_file1_loc }}"
+        - "{{ env_followingcheck_batch1_file2_loc }}"
       tags:
         - configure
 
@@ -102,5 +140,11 @@
         - "{{ env_dmcheck_batch1_file1_loc }}"
         - "{{ env_dmcheck_batch1_file2_loc }}"
         - "{{ env_dmcheck_monitor_loc }}"
+        - "{{ env_followercheck_monitor_loc }}"
+        - "{{ env_followercheck_batch1_file1_loc }}"
+        - "{{ env_followercheck_batch1_file2_loc }}"
+        - "{{ env_followingcheck_monitor_loc }}"
+        - "{{ env_followingcheck_batch1_file1_loc }}"
+        - "{{ env_followingcheck_batch1_file2_loc }}"
       tags:
         - configure

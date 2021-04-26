@@ -35,3 +35,35 @@
         files: docker-compose-dmcheck_batch1.yml
         build: yes
         restarted: true
+
+    - name: Starting Follower check monitor tool
+      docker_compose:
+        project_src: "{{ run_path }}"
+        project_name: "{{ deployment_name }}"
+        files: docker-compose-followerbucket_monitor.yml
+        build: yes
+        restarted: true
+
+    - name: Starting Follower Check tools
+      docker_compose:
+        project_src: "{{ run_path }}"
+        project_name: "{{ deployment_name }}"
+        files: docker-compose-followercheck_batch1.yml
+        build: yes
+        restarted: true
+
+    - name: Starting Following check monitor tool
+      docker_compose:
+        project_src: "{{ run_path }}"
+        project_name: "{{ deployment_name }}"
+        files: docker-compose-followingbucket_monitor.yml
+        build: yes
+        restarted: true
+
+    - name: Starting Following Check tools
+      docker_compose:
+        project_src: "{{ run_path }}"
+        project_name: "{{ deployment_name }}"
+        files: docker-compose-followingcheck_batch1.yml
+        build: yes
+        restarted: true
